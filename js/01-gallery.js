@@ -1,7 +1,7 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
-const galleryContainer = document.querySelector(`ul.gallery`);
-let lightbox
+const galleryContainer = document.querySelector(".gallery");
+let lightbox;
 
 const images = galleryItems.map((item) => {
     return `<li>
@@ -15,9 +15,9 @@ const images = galleryItems.map((item) => {
                         />
                     </a>
                 </div>
-            </li>`;    
+            </li>`    
 });
-galleryContainer.insertAdjacentHTML('beforeend', images.join(""));
+galleryContainer.insertAdjacentHTML("afterbegin", images.join(""));
 
 function closePreview(event) {
     if (event.key === "Escape") {
@@ -26,14 +26,16 @@ function closePreview(event) {
     }
 }
 
-function handleClick (event) {
+function handleClick(event) {
     event.preventDefault();
-    let selectedImage = event.target.dataset.source;
-    lightbox = basicLightbox.create(`<img width="1400" height="900" src=${selectedImage}>`);
-    lightbox.show();
-    document.addEventListener("keydown", closePreview);
+    if (event.target.classList.contains("gallery__image")) {
+        let selectedImage = event.target.dataset.source;
+        lightbox = basicLightbox.create(`<img width="1400" height="900" src=${selectedImage}>`);
+        lightbox.show();
+        document.addEventListener("keydown", closePreview);
+    }
 }
 
 
-galleryContainer.addEventListener('click', handleClick);
+galleryContainer.addEventListener("click", handleClick);
 console.log(galleryItems);
